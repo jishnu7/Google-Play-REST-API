@@ -1,3 +1,6 @@
+#! /usr/bin/env python
+# Copyright 2012 Jishnu Mohan <jishnu7@gmail.com>
+
 from flask import Flask, jsonify, request
 import urllib2
 from bs4 import BeautifulSoup
