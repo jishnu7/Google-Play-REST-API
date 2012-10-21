@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 # Copyright 2012 Jishnu Mohan <jishnu7@gmail.com>
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, Response
 import urllib2
 from bs4 import BeautifulSoup
 
@@ -16,6 +16,13 @@ def not_found(error=None):
     }
     resp = jsonify(message)
     resp.status_code = 404
+    return resp
+
+
+@app.route('/')
+def home():
+    msg = 'Usage: /app/info/id. <br/>eg: /app/info/com.google.android.gm'
+    resp = Response(msg, status=200, mimetype='text/html')
     return resp
 
 
