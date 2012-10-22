@@ -9,4 +9,4 @@ try:
 except IOError:
     pass
 
-from play-api import app as application
+from playapi import app as application
