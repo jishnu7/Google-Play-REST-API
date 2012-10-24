@@ -27,12 +27,12 @@ def home():
 
 
 @app.route('/app/info/<app_id>')
-def app_info(app_id):
+@app.route('/app/info/<app_id>/<language>')
+def app_info(app_id, language='en_US'):
     print app_id
     url_play = 'https://play.google.com'
     link = url_play + '/store/apps/details?id=' + app_id
-    #TODO: Headers for later enhancement, multi-language support
-    request = urllib2.Request(link, headers={})
+    request = urllib2.Request(link, headers={'Accept-Language': language})
 
     try:
         web = urllib2.urlopen(request).read()
