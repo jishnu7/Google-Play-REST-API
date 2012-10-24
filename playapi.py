@@ -3,7 +3,7 @@
 
 from flask import Flask, jsonify, request, Response
 import urllib2
-from bs4 import BeautifulSoup
+from BeautifulSoup import BeautifulSoup
 
 app = Flask(__name__)
 
@@ -46,7 +46,10 @@ def app_info(app_id):
         return not_found()
 
     data = BeautifulSoup(web)
-    meta_data = data.find('div', class_='doc-metadata')
+    meta_data = data.find('div', {'class':'doc-metadata'})
+
+    if meta_data == None:
+        return not_found()
 
     app_name = meta_data.find(itemprop='name')['content']
     app_image = meta_data.find(itemprop='image')['content']
