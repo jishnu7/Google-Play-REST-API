@@ -70,7 +70,7 @@ def app_info(app_id, language='en_US'):
     app_price = meta_data.find(itemprop='price')['content']
     app_contentrating = meta_data.find(itemprop='contentRating').next
     app_desc = desc_div.text
-    app_screenshots = [img['src'] for img in screenshots]
+    app_screenshots = [img['src'].split("=")[0] for img in screenshots]
 
     app_data = {
         'name': app_name,
