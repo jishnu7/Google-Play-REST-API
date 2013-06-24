@@ -3,6 +3,7 @@
 
 from flask import Flask, jsonify, request, Response
 import urllib2
+import httplib
 from BeautifulSoup import BeautifulSoup
 
 app = Flask(__name__)
@@ -11,8 +12,8 @@ app = Flask(__name__)
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
-            'status': 404,
-            'message': 'Not Found: ' + request.url,
+        'status': 404,
+        'message': 'Not Found: ' + request.url,
     }
     resp = jsonify(message)
     resp.status_code = 404
@@ -46,11 +47,11 @@ def app_info(app_id, language='en_US'):
         return not_found()
 
     data = BeautifulSoup(web)
-    meta_data = data.find('div', {'class':'doc-metadata'})
-    desc_div = data.find('div', {'id':'doc-original-text'})
+    meta_data = data.find('div', {'class': 'doc-metadata'})
+    desc_div = data.find('div', {'id': 'doc-original-text'})
     screenshots = data.findAll('img', {'itemprop': 'screenshot'})
 
-    if meta_data == None:
+    if meta_data is None:
         return not_found()
 
     app_name = meta_data.find(itemprop='name')['content']
@@ -72,22 +73,22 @@ def app_info(app_id, language='en_US'):
     app_screenshots = [img['src'] for img in screenshots]
 
     app_data = {
-            'name': app_name,
-            'image': app_image,
-            'author': app_dev,
-            'author_url': url_play + app_dev_url,
-            'ratingValue': app_rating,
-            'ratingCount': app_rating_count,
-            'datePublished': app_updated,
-            'softwareVersion': app_version,
-            'operatingSystems': app_os,
-            'numDownloads': app_downloads,
-            'fileSize': app_size,
-            'price': app_price,
-            'contentRating': app_contentrating,
-            'description': app_desc,
-            'screenshots': app_screenshots,
-            }
+        'name': app_name,
+        'image': app_image,
+        'author': app_dev,
+        'author_url': url_play + app_dev_url,
+        'ratingValue': app_rating,
+        'ratingCount': app_rating_count,
+        'datePublished': app_updated,
+        'softwareVersion': app_version,
+        'operatingSystems': app_os,
+        'numDownloads': app_downloads,
+        'fileSize': app_size,
+        'price': app_price,
+        'contentRating': app_contentrating,
+        'description': app_desc,
+        'screenshots': app_screenshots,
+    }
     resp = jsonify(app_data)
     resp.status_code = 200
     return resp
